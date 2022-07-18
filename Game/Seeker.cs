@@ -1,4 +1,6 @@
 using System;
+using System.IO;
+using System.Text;
 
 
 namespace Unit03.Game
@@ -15,7 +17,6 @@ namespace Unit03.Game
         /// </summary>
     public class Seeker
     {
-        private int location = 0
         
 
     // 2) Create the class constructor. Use the following method comment.
@@ -25,8 +26,7 @@ namespace Unit03.Game
         /// </summary>
         public Seeker()
         {
-            Random random = new Random();
-            location = random.Next(1001);
+
         }
 
     // 3) Create the GetLocation() method. Use the following method comment.
@@ -35,20 +35,17 @@ namespace Unit03.Game
         /// Gets the current location.
         /// </summary>
         /// <returns>The current location as an int.</returns>
-        public int GetLocation()
+        public bool LetterCheck(char character, Hider word)
         {
-            return location;
-        }
-
-    // 4) Create the MoveLocation(int location) method. Use the following method comment.
-        
-        /// <summary>
-        /// Moves to the given location.
-        /// </summary>
-        /// <param name="location">The given location.</param>
-        public void MoveLocation(int location)
-        {
-            this.location = location
+            bool run = false;
+            foreach(char y in word.GetList())
+            {
+                if (character == y)
+                {
+                run = true;
+                }
+            }
+            return run;
         }
     }
 }

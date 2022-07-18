@@ -1,3 +1,4 @@
+using System;
 namespace Unit03.Game
 {
     /// <summary>
@@ -8,9 +9,12 @@ namespace Unit03.Game
     /// </summary>
     public class Director
     {
-        private Hider hider = new Hider();
+        private Hider word = new Hider();
+        private Hider blank = new Hider();
         private bool isPlaying = true;
         private Seeker seeker = new Seeker();
+        private char character;
+        private int problem = 0;
         private TerminalService terminalService = new TerminalService();
 
         /// <summary>
@@ -38,9 +42,14 @@ namespace Unit03.Game
         /// </summary>
         private void GetInputs()
         {
-            terminalService.WriteText(hider.location.ToString());
-            int location = terminalService.ReadNumber("\nEnter a location [1-1000]: ");
-            seeker.MoveLocation(location);
+            string[] words = {"their","which","these","years","because","place","might","large","story","today"};
+            Random random = new Random();
+            int num = random.Next(10);
+            num = num - 1;
+            word.SetWord(words[num]);
+            blank.SetBlanks(words[num]);
+            character = terminalService.ReadCharacter("Guess a letter.[a-z] ");
+
         }
 
         /// <summary>
@@ -48,7 +57,14 @@ namespace Unit03.Game
         /// </summary>
         private void DoUpdates()
         {
-            hider.WatchSeeker(seeker);
+            if (seeker.LetterCheck(character, word) == true)
+            {
+                blank.nother(character, word);
+            }
+            else
+            {
+                problem += 1;
+            }
         }
 
         /// <summary>
@@ -56,13 +72,12 @@ namespace Unit03.Game
         /// </summary>
         private void DoOutputs()
         {
-            string hint = hider.GetHint();
-            terminalService.WriteText(hint);
-            if (hider.IsFound())
+            if (word.GetList() == blank.GetList())
             {
                 isPlaying = false;
             }
             
         }
+
     }
 }

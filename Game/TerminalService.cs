@@ -49,5 +49,14 @@ namespace Unit03.Game
         {
             Console.WriteLine(text);
         }
+
+        public char ReadCharacter(string prompt)
+        {
+            char[] alphibet = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
+            char user;
+            Console.Write(prompt);
+            user = Console.ReadLine()[0];
+            return user;
+        }
     }
 }

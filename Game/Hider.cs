@@ -12,64 +12,54 @@ namespace Unit03.Game
     /// </summary>
     public class Hider
     {
-        public int location = 0;
-        private List<int> distance = new List<int>();
+        private List<char> letters = new List<char>();
 
         /// <summary>
         /// Constructs a new instance of Hider. 
         /// </summary>
         public Hider()
         {
-            Random random = new Random();
-            location = random.Next(1001);
-            // start with two so GetHint always works
-            distance.Add(0);
-            distance.Add(0);
+            
         }
 
         /// <summary>
-        /// Gets a hint for the seeker.
+        /// Converts the word into a list of characters.
         /// </summary>
-        /// <returns>A new hint.</returns>
-        public string GetHint()
+        public void SetWord(string word)
         {
-            int current = distance[distance.Count - 1];
-            int previous = distance[distance.Count - 2];
-
-            string hint = "(-.-) Nap time.";
-            if (current == 0)
+            letters.AddRange(word);
+        }
+         /// <summary>
+        /// Creates a list of underscores acording to the length of the word.
+        /// </summary>
+        public void SetBlanks(string word)
+        {
+            List<char> blank = new List<char>();
+            blank.AddRange(word);
+            int num = blank.Count;
+            for (int i = 0; i < num; i++)
             {
-                hint = "(;.;) You found me!";
+                letters.Add('_');
             }
-            else if (current > previous)
-            {
-                hint = "(^.^) Getting colder!";
-            }
-            else if (current < previous)
-            {
-                hint = "(>.<) Getting warmer!";
-            }
-
-            return hint;
         }
 
-        /// <summary>
-        /// Whether or not the hider has been found.
-        /// </summary>
-        /// <returns>True if found; false if otherwise.</returns>
-        public bool IsFound()
+        public List<char> GetList()
         {
-            return distance[distance.Count - 1] == 0;
+            return letters;
         }
-
-        /// <summary>
-        /// Watches the seeker by keeping track of how far away it is.
-        /// </summary>
-        /// <param name="seeker">The seeker to watch.</param>
-        public void WatchSeeker(Seeker seeker)
+        
+        public void nother(char character, Hider word)
         {
-            int newDistance = Math.Abs(location - seeker.GetLocation());
-            distance.Add(newDistance);
+            int index = 0;
+            foreach (char y in word.GetList())
+            {
+                if (y == character)
+                {
+                this.letters[index] = y;
+                }
+                index = index + 1;
+            }
         }
+        
     }
 }
